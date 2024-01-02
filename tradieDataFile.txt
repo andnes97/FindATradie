@@ -1,0 +1,7 @@
+name,phone number,occupation
+Jens,12345678,Carpenter
+Lisa,98765432,Plumber
+Ole,67890123,Electrician
+Maren,10293847,Carpenter
+Hans,56473829,Electrician
+Elin,26374859,Plumber
