@@ -15,20 +15,15 @@ public class Main {
         allTradies = loadTradiesFromFile(filePath);
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Welcome to Find A Tradie! \n\n\t1. Search for a tradie " +
-                "\n\t2. Register as a tradie \n\t3. Exit the program \n" +
-                "\nWhat would you like to do? \n");
+        System.out.println("Welcome to Find A Tradie! \n\n\t1. Log in \n\t2. Register new profile" +
+                "\n\t3. Exit program");
         int menuSelection = input.nextInt();
 
         if (menuSelection == 1) {
-            System.out.println("Search for a tradie.");
-            List<Tradie> availableTradies = allTradies.getTradieDatabase();
-            for (Tradie tradie: availableTradies) {
-                System.out.println(tradie.getName() + "\nOccupation: " + tradie.getOccupation()
-                + "\nPhone number: " + tradie.getPhoneNumber() + "\n");
-            }
+            System.out.println("Log in to existing user");
+            printTradieInfo();
         } else if (menuSelection == 2) {
-            System.out.println("Register as a tradie.");
+            System.out.println("Register a new profile");
         } else if (menuSelection == 3) {
             System.out.println("Exit the program");
             System.exit(0);
@@ -72,6 +67,19 @@ public class Main {
         }
 
         return allTradiesDatabase;
+    }
+
+    /**
+     * method printing information from every tradie in the database
+     * (eventually only print info from selected tradies)
+     */
+    private static void printTradieInfo() {
+        List<Tradie> availableTradies = allTradies.getTradieDatabase();
+        for (Tradie tradie: availableTradies) {
+            System.out.println(tradie.getName() + "\nOccupation: " + tradie.getOccupation()
+                    + "\nPhone number: " + tradie.getPhoneNumber() + "\n");
+        }
+
     }
 
 }
