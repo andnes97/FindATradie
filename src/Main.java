@@ -7,13 +7,13 @@ import java.util.Scanner;
 public class Main {
 
     // fields
+    public static Scanner input = new Scanner(System.in);
     private final static String filePath = "./tradieDataFile.txt";
     private static AllTradies allTradies;
 
     // methods
     public static void main(String[] args) {
         allTradies = loadTradiesFromFile(filePath);
-        Scanner input = new Scanner(System.in);
 
         System.out.println("Welcome to Find A Tradie! \n\n\t1. Log in \n\t2. Register new profile" +
                 "\n\t3. Exit program");
@@ -21,11 +21,11 @@ public class Main {
 
         if (menuSelection == 1) {
             System.out.println("Log in to existing user");
-            printTradieInfo();
+            logIn();
         } else if (menuSelection == 2) {
             System.out.println("Register a new profile");
         } else if (menuSelection == 3) {
-            System.out.println("Exit the program");
+            System.out.println("Exiting the program");
             System.exit(0);
         }
     }
@@ -67,6 +67,18 @@ public class Main {
         }
 
         return allTradiesDatabase;
+    }
+
+    /**
+     * method for logging in (no authentication or access yet)
+     */
+    private static void logIn() {
+        System.out.println("Username:");
+        String username = input.next();
+
+        System.out.println("Password:");
+        String password = input.next();
+        System.out.println("\nWelcome " + username + "! What would you like to do?");
     }
 
     /**
