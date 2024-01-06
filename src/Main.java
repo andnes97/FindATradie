@@ -21,7 +21,16 @@ public class Main {
 
         if (menuSelection == 1) {
             System.out.println("Log in to existing user");
-            logIn();
+
+            System.out.println("Username:");
+            String username = input.next();
+            System.out.println("Password:");
+            String password = input.next();
+
+            if (!checkProfile(username, password)) {
+                System.out.println("No such username/password combination exists, please try again.");
+            } else System.out.println("Hello " + username + "! What would you like to do?");
+
         } else if (menuSelection == 2) {
             System.out.println("Register a new profile");
         } else if (menuSelection == 3) {
@@ -71,16 +80,11 @@ public class Main {
         return allProfilesDatabase;
     }
 
-    /**
-     * method for logging in (no authentication or access yet)
-     */
-    private static void logIn() {
-        System.out.println("Username:");
-        String username = input.next();
-
-        System.out.println("Password:");
-        String password = input.next();
-        System.out.println("\nWelcome " + username + "! What would you like to do?");
+    private static boolean checkProfile(String username, String password) {
+        if (allProfiles.getProfile(username, password) == null) {
+            return false;
+        }
+        return true;
     }
 
 }

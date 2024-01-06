@@ -1,18 +1,38 @@
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AllProfiles {
 
-    // fields
-    private final List<Profile> profileDatabase = new ArrayList<>();
+    private final Set<Profile> profileSet = new HashSet<>();
 
     // methods
+
+    /**
+     * method adding a profile to the profileSet database
+     * @param profile a Profile object
+     */
     public void addProfile(Profile profile) {
-        this.profileDatabase.add(profile);
+        this.profileSet.add(profile);
     }
 
+    /**
+     * method getting a Profile object, given their username and password
+     * @param username a String representing profile's username
+     * @param password a String representing profile's password
+     * @return a Profile object if username/password is valid, else null
+     */
+    public Profile getProfile(String username, String password) {
+        for (Profile p: profileSet) {
+            if (p.getUsername().equals(username) && p.getPassword().equals(password)) return p;
+        }
+        return null;
+    }
+
+    /*
     public List<Profile> getProfileDatabase() {
         return profileDatabase;
     }
+    */
 
 }
