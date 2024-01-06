@@ -1,7 +1,9 @@
-name,phone number,occupation
-Jens,12345678,Carpenter
-Lisa,98765432,Plumber
-Ole,67890123,Electrician
-Maren,10293847,Carpenter
-Hans,56473829,Electrician
-Elin,26374859,Plumber
+username,password,profile type,name,phone number,occupation
+jenlu123,potet1,tradie,Jens Lund,12345678,Carpenter
+olsenli95,eple2,tradie,Lisa Olsen,98765432,Plumber
+andnes97,passord3,customer,Andreas Nes,99339271,NA
+nordmann91,mais4,tradie,Ole Nordmann,67890123,Electrician
+mareno,kanari5,tradie,Maren Ottesen,10293847,Carpenter
+hanpe321,hundemat6,tradie,Hans Pedersen,56473829,Electrician
+ehelgeland,korn7,tradie,Elin Helgeland,26374859,Plumber
+johnlar2,melon8,customer,John Larsen,09812384,NA

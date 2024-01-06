@@ -51,17 +51,20 @@ public class Main {
         for (int i = 1; i < fileContent.size(); i++) {
             String[] fileContentFeature = fileContent.get(i).split(",");
 
-            String name = fileContentFeature[0];
+            String username = fileContentFeature[0];
+            String password = fileContentFeature[1];
+            String profileType = fileContentFeature[2];
+            String name = fileContentFeature[3];
             long phoneNumber = 0;
             try {
-                phoneNumber = Long.parseLong(fileContentFeature[1]);
+                phoneNumber = Long.parseLong(fileContentFeature[4]);
             } catch (NumberFormatException n) {
                 System.out.println("Error, phone number could not be parsed on line" + (i + 1));
                 System.exit(0);
             }
-            String occupation = fileContentFeature[2];
+            String occupation = fileContentFeature[5];
 
-            Profile profile = new Profile(name, phoneNumber, occupation);
+            Profile profile = new Profile(username, password, profileType, name, phoneNumber, occupation);
             allProfilesDatabase.addProfile(profile);
         }
 
@@ -78,19 +81,6 @@ public class Main {
         System.out.println("Password:");
         String password = input.next();
         System.out.println("\nWelcome " + username + "! What would you like to do?");
-    }
-
-    /**
-     * method printing information from every profile in the database
-     * (eventually only print info from selected profiles/tradies)
-     */
-    private static void printProfileInfo() {
-        List<Profile> availableProfiles = allProfiles.getProfileDatabase();
-        for (Profile profile : availableProfiles) {
-            System.out.println(profile.getName() + "\nOccupation: " + profile.getOccupation()
-                    + "\nPhone number: " + profile.getPhoneNumber() + "\n");
-        }
-
     }
 
 }
