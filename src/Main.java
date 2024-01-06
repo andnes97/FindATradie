@@ -8,12 +8,12 @@ public class Main {
 
     // fields
     public static Scanner input = new Scanner(System.in);
-    private final static String filePath = "./tradieDataFile.txt";
-    private static AllTradies allTradies;
+    private static final String filePath = "./profileData.txt";
+    private static AllProfiles allProfiles;
 
     // methods
     public static void main(String[] args) {
-        allTradies = loadTradiesFromFile(filePath);
+        allProfiles = loadProfilesFromFile();
 
         System.out.println("Welcome to Find A Tradie! \n\n\t1. Log in \n\t2. Register new profile" +
                 "\n\t3. Exit program");
@@ -31,13 +31,12 @@ public class Main {
     }
 
     /**
-     * method loading content from data file as Tradie objects in an AllTradies instance
-     * @param filePath a path to the data containing information about tradies
-     * @return allTradiesDatabase: a AllTradies object containing each individual tradie
+     * method loading content from data file as Profile objects in an AllProfiles instance
+     * @return allProfilesDatabase: a AllProfiles object containing each individual profile
      */
-    private static AllTradies loadTradiesFromFile(String filePath) {
+    private static AllProfiles loadProfilesFromFile() {
 
-        AllTradies allTradiesDatabase = new AllTradies();
+        AllProfiles allProfilesDatabase = new AllProfiles();
         Path path = Path.of(filePath);
 
         List<String> fileContent = null;
@@ -62,11 +61,11 @@ public class Main {
             }
             String occupation = fileContentFeature[2];
 
-            Tradie tradie = new Tradie(name, phoneNumber, occupation);
-            allTradiesDatabase.addTradie(tradie);
+            Profile profile = new Profile(name, phoneNumber, occupation);
+            allProfilesDatabase.addProfile(profile);
         }
 
-        return allTradiesDatabase;
+        return allProfilesDatabase;
     }
 
     /**
@@ -82,14 +81,14 @@ public class Main {
     }
 
     /**
-     * method printing information from every tradie in the database
-     * (eventually only print info from selected tradies)
+     * method printing information from every profile in the database
+     * (eventually only print info from selected profiles/tradies)
      */
-    private static void printTradieInfo() {
-        List<Tradie> availableTradies = allTradies.getTradieDatabase();
-        for (Tradie tradie: availableTradies) {
-            System.out.println(tradie.getName() + "\nOccupation: " + tradie.getOccupation()
-                    + "\nPhone number: " + tradie.getPhoneNumber() + "\n");
+    private static void printProfileInfo() {
+        List<Profile> availableProfiles = allProfiles.getProfileDatabase();
+        for (Profile profile : availableProfiles) {
+            System.out.println(profile.getName() + "\nOccupation: " + profile.getOccupation()
+                    + "\nPhone number: " + profile.getPhoneNumber() + "\n");
         }
 
     }

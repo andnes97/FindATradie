@@ -1,4 +1,4 @@
-public class Tradie {
+public class Profile {
 
     // fields
     private final String name;
@@ -13,7 +13,7 @@ public class Tradie {
      * @param phoneNumber the phone number of the tradie
      * @param occupation the occupation of the tradie
      */
-    public Tradie(String name, long phoneNumber, String occupation) {
+    public Profile(String name, long phoneNumber, String occupation) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.occupation = occupation;

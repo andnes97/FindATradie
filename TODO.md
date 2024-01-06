@@ -1,9 +1,11 @@
 Soon:
 
-- User can enter their preferred tradie-occupation for their search
-- User can create a new user and log in or out
-- User can register as a new tradie which will be added to the data file
+- User can create a new customer or tradie profile and log in or out
+- New users are added to profileData.txt
+- Customers can enter their preferred occupations for when searching for tradies
+- Tradies can open their requests from customers
 - User can change their profile information and/or delete their profile
+
 
 Later:
 
