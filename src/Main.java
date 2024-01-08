@@ -1,3 +1,4 @@
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,11 +13,16 @@ public class Main {
     private static AllProfiles allProfiles;
 
     // methods
+
+    /**
+     * main method
+     * @param args
+     */
     public static void main(String[] args) {
         allProfiles = loadProfilesFromFile();
 
-        System.out.println("Welcome to Find A Tradie! \n\n\t1. Log in \n\t2. Register new profile" +
-                "\n\t3. Exit program");
+        System.out.println("Welcome to Find A Tradie! \n\n1. Log in \n2. Register new profile" +
+                "\n3. Exit program");
         int menuSelection = input.nextInt();
 
         if (menuSelection == 1) {
@@ -33,6 +39,8 @@ public class Main {
 
         } else if (menuSelection == 2) {
             System.out.println("Register a new profile");
+            createProfile();
+
         } else if (menuSelection == 3) {
             System.out.println("Exiting the program");
             System.exit(0);
@@ -80,11 +88,46 @@ public class Main {
         return allProfilesDatabase;
     }
 
+    /**
+     * method to check if entered username and password combination is in the database (will be more complex later)
+     * @param username String representing the entered username
+     * @param password String representing the entered password
+     * @return true if user exists, false if not
+     */
     private static boolean checkProfile(String username, String password) {
         if (allProfiles.getProfile(username, password) == null) {
             return false;
         }
         return true;
+    }
+
+    /**
+     * method to create a new profile and write it to profileData.txt
+     */
+    private static void createProfile() {
+
+        System.out.println("Enter your username:");
+        String username = input.next();
+        System.out.println("Set your new password:");
+        String password = input.next();
+        System.out.println("Are you a customer or a tradie? (customer/tradie):");
+        String profileType = input.next();
+        input.nextLine();
+        System.out.println("Enter your full name:");
+        String name = input.nextLine();
+        System.out.println("Enter your phone number");
+        String phoneNumber = input.next();
+        System.out.println("Enter your occupation if you are registered as a tradie");
+        String occupation = input.next();
+
+        String newProfileEntry = String.format("%s,%s,%s,%s,%s,%s",username,password,profileType,name,phoneNumber,occupation);
+
+        try (FileWriter fileWriter = new FileWriter(filePath,true)) {
+            fileWriter.write(System.lineSeparator() + newProfileEntry);
+            System.out.println("New profile created and added to our system.");
+        } catch (IOException io) {
+            System.out.println("Error, something happened when trying to write to the file.");
+        }
     }
 
 }
