@@ -37,6 +37,11 @@ public class Main {
                 System.out.println("No such username/password combination exists, please try again.");
             } else System.out.println("Hello " + username + "! What would you like to do?");
 
+            System.out.println("Are you a customer looking for help, or a tradie looking for work? (customer/tradie)");
+            String profileType = input.next();
+            SearchFilter searchFilter = setSearchFilter(profileType);
+
+
         } else if (menuSelection == 2) {
             System.out.println("Register a new profile");
             createProfile();
@@ -95,10 +100,7 @@ public class Main {
      * @return true if user exists, false if not
      */
     private static boolean checkProfile(String username, String password) {
-        if (allProfiles.getProfile(username, password) == null) {
-            return false;
-        }
-        return true;
+        return allProfiles.getProfile(username, password) != null;
     }
 
     /**
@@ -128,6 +130,32 @@ public class Main {
         } catch (IOException io) {
             System.out.println("Error, something happened when trying to write to the file.");
         }
+    }
+
+    /**
+     * method to get users criteria to set filters for the search
+     * @param profileType the type of the profile (customer/tradie)
+     * @return a SearchFilter object with selected filters
+     */
+    private static SearchFilter setSearchFilter(String profileType) {
+
+        System.out.println("You are searching for a " + profileType + ".");
+        String occupation = "";
+        if (profileType.equals("customer")) {
+            int occupationInt = -1;
+            while (occupationInt < 1 || occupationInt > 4) {
+                System.out.println("What type of tradie do you need help from? \n1 - Carpenter" +
+                "\n2 - Plumber \n3 - Electrician \n4 - None, exit program");
+                occupation = input.next();
+                try {
+                    occupationInt = Integer.parseInt(occupation);
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Invalid input. Please only user valid integers (1, 2, 3, 4)");
+                }
+            }
+        }
+
+        return new SearchFilter(profileType, occupation);
     }
 
 }
