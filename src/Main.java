@@ -2,6 +2,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -40,7 +41,7 @@ public class Main {
             System.out.println("Are you a customer looking for help, or a tradie looking for work? (customer/tradie)");
             String profileType = input.next();
             SearchFilter searchFilter = setSearchFilter(profileType);
-
+            processSearch(searchFilter);
 
         } else if (menuSelection == 2) {
             System.out.println("Register a new profile");
@@ -143,19 +144,43 @@ public class Main {
         String occupation = "";
         if (profileType.equals("customer")) {
             int occupationInt = -1;
-            while (occupationInt < 1 || occupationInt > 4) {
+            while (occupationInt < 1 || occupationInt > 3) {
                 System.out.println("What type of tradie do you need help from? \n1 - Carpenter" +
-                "\n2 - Plumber \n3 - Electrician \n4 - None, exit program");
-                occupation = input.next();
+                "\n2 - Plumber \n3 - Electrician");
+                String occupationInput = input.next();
                 try {
-                    occupationInt = Integer.parseInt(occupation);
+                    occupationInt = Integer.parseInt(occupationInput);
                 } catch (NumberFormatException nfe) {
-                    System.out.println("Invalid input. Please only user valid integers (1, 2, 3, 4)");
+                    System.out.println("Invalid input. Please only user valid integers (1, 2, 3)");
                 }
             }
+
+            occupation = switch (occupationInt) {
+                case 1 -> "Carpenter";
+                case 2 -> "Plumber";
+                case 3 -> "Electrician";
+                default -> occupation;
+            };
         }
 
         return new SearchFilter(profileType, occupation);
+    }
+
+    /**
+     * method to display profiles that match entered filters
+     * @param searchFilter entered filters by the user
+     */
+    private static void processSearch(SearchFilter searchFilter) {
+
+        List<Profile> matchingProfiles = allProfiles.findMatches(searchFilter);
+        if (matchingProfiles.isEmpty()) {
+            System.out.println("Sorry, but there are no tradies available with your search");
+        } else {
+            System.out.println("The following tradies are available: \n");
+            for (Profile p : matchingProfiles) {
+                System.out.println(p.getProfileDescription());
+            }
+        }
     }
 
 }

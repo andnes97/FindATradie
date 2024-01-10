@@ -86,7 +86,7 @@ public class Profile {
 
     public String getProfileDescription() {
         return "Name: " + this.getName() + "\nPhone number: " + this.getPhoneNumber()
-                + "Occupation: " + this.getOccupation();
+                + "\nOccupation: " + this.getOccupation() + "\n";
     }
 
 }

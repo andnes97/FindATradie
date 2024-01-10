@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,10 +30,19 @@ public class AllProfiles {
         return null;
     }
 
-    /*
-    public List<Profile> getProfileDatabase() {
-        return profileDatabase;
+    /**
+     * method finding profiles that match users entered filters to profiles in the database
+     * @param searchFilter a SearchFilter object representing the users entered filters
+     * @return matchingProfiles: A list of profiles that match the users filters
+     */
+    public List<Profile> findMatches(SearchFilter searchFilter) {
+
+        List<Profile> matchingProfiles = new ArrayList<>();
+        for (Profile p : profileSet) {
+            if (p.getOccupation().equals(searchFilter.getOccupation())) matchingProfiles.add(p);
+        }
+
+        return matchingProfiles;
     }
-    */
 
 }
