@@ -28,15 +28,7 @@ public class Main {
 
         if (menuSelection == 1) {
             System.out.println("Log in to existing user");
-
-            System.out.println("Username:");
-            String username = input.next();
-            System.out.println("Password:");
-            String password = input.next();
-
-            if (!checkProfile(username, password)) {
-                System.out.println("No such username/password combination exists, please try again.");
-            } else System.out.println("Hello " + username + "! What would you like to do?");
+            loginToProfile();
 
             System.out.println("Are you a customer looking for help, or a tradie looking for work? (customer/tradie)");
             String profileType = input.next();
@@ -94,6 +86,32 @@ public class Main {
         return allProfilesDatabase;
     }
 
+    private static void loginToProfile() {
+
+        String username = "";
+        String password = "";
+        while (username.equals("")) {
+            System.out.println("Username:");
+            username = input.next();
+            System.out.println("Password:");
+            password = input.next();
+            if (!checkProfile(username, password)) {
+                System.out.println("The username and/or password is incorrect, please try again.");
+                username = "";
+            }
+        }
+        System.out.println("Hello " + username + "! What would you like to do?");
+    }
+
+    /**
+     * method to check if entered username already exists in the database
+     * @param username String representing the entered username
+     * @return true if username exists, false if not
+     */
+    private static boolean checkProfileUsername(String username) {
+        return allProfiles.getProfileUsername(username) != null;
+    }
+
     /**
      * method to check if entered username and password combination is in the database (will be more complex later)
      * @param username String representing the entered username
@@ -109,8 +127,15 @@ public class Main {
      */
     private static void createProfile() {
 
-        System.out.println("Enter your username:");
-        String username = input.next();
+        String username = "";
+        while (username.equals("")) {
+            System.out.println("Enter your username:");
+            username = input.next();
+            if (checkProfileUsername(username)) {
+                System.out.println("The entered username already exists, please try another one.");
+                username = "";
+            }
+        }
         System.out.println("Set your new password:");
         String password = input.next();
         System.out.println("Are you a customer or a tradie? (customer/tradie):");

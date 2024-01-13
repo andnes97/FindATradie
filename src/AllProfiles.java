@@ -31,6 +31,18 @@ public class AllProfiles {
     }
 
     /**
+     * method getting a Profile object given the username
+     * @param username a String representing profile's username
+     * @return a Profile object if username exists
+     */
+    public Profile getProfileUsername(String username) {
+        for (Profile p: profileSet) {
+            if (p.getUsername().equals(username)) return p;
+        }
+        return null;
+    }
+
+    /**
      * method finding profiles that match users entered filters to profiles in the database
      * @param searchFilter a SearchFilter object representing the users entered filters
      * @return matchingProfiles: A list of profiles that match the users filters
