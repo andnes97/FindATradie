@@ -14,7 +14,6 @@ public class Main {
     private static AllProfiles allProfiles;
 
     // methods
-
     /**
      * main method
      * @param args
@@ -22,27 +21,33 @@ public class Main {
     public static void main(String[] args) {
         allProfiles = loadProfilesFromFile();
 
-        System.out.println("Welcome to Find A Tradie! \n\n1. Log in \n2. Register new profile" +
-                "\n3. Exit program");
-        int menuSelection = input.nextInt();
+        System.out.println("Welcome to Find A Tradie!");
 
-        if (menuSelection == 1) {
-            System.out.println("Log in to existing user");
-            loginToProfile();
+        int menuSelection = 0;
+        while (menuSelection == 0 || menuSelection == 2) {
+            System.out.println("\n1. Log in \n2. Register new profile" +
+            "\n3. Exit program");
+            menuSelection = input.nextInt();
 
-            System.out.println("Are you a customer looking for help, or a tradie looking for work? (customer/tradie)");
-            String profileType = input.next();
-            SearchFilter searchFilter = setSearchFilter(profileType);
-            processSearch(searchFilter);
+            if (menuSelection == 1) {
+                System.out.println("Log in to existing user");
+                loginToProfile();
 
-        } else if (menuSelection == 2) {
-            System.out.println("Register a new profile");
-            createProfile();
+                System.out.println("Are you a customer looking for help, or a tradie looking for work? (customer/tradie)");
+                String profileType = input.next();
+                SearchFilter searchFilter = setSearchFilter(profileType);
+                processSearch(searchFilter);
 
-        } else if (menuSelection == 3) {
-            System.out.println("Exiting the program");
-            System.exit(0);
+            } else if (menuSelection == 2) {
+                System.out.println("Register a new profile");
+                createProfile();
+
+            } else if (menuSelection == 3) {
+                System.out.println("Exiting the program");
+                System.exit(0);
+            }
         }
+
     }
 
     /**
@@ -136,20 +141,44 @@ public class Main {
                 username = "";
             }
         }
+
         System.out.println("Set your new password:");
         String password = input.next();
-        System.out.println("Are you a customer or a tradie? (customer/tradie):");
-        String profileType = input.next();
+
+        String profileType = "";
+        while (profileType.equals("")) {
+            System.out.println("Are you a customer or a tradie? (customer/tradie):");
+            profileType = input.next();
+            if (!profileType.equals("customer") && !profileType.equals("tradie")) {
+                System.out.println("The entered profile type is not valid, please enter 'customer' or 'tradie'.");
+                profileType = "";
+            }
+        }
+
         input.nextLine();
         System.out.println("Enter your full name:");
         String name = input.nextLine();
-        System.out.println("Enter your phone number");
-        String phoneNumber = input.next();
-        System.out.println("Enter your occupation if you are registered as a tradie");
-        String occupation = input.next();
+
+        String phoneNumber = "";
+        while (phoneNumber.equals("")) {
+            System.out.println("Enter your phone number");
+            phoneNumber = input.next();
+            try {
+                long phoneNumberLong = Long.parseLong(phoneNumber);
+            } catch (NumberFormatException nfe) {
+                System.out.println("Please enter a valid phone number (only use numbers)");
+                phoneNumber = "";
+            }
+        }
+        
+        String occupation = "";
+        if (profileType.equals("tradie")) {
+            System.out.println("Enter your registered occupation");
+            occupation = input.next();
+        }
+        else occupation = "NA";
 
         String newProfileEntry = String.format("%s,%s,%s,%s,%s,%s",username,password,profileType,name,phoneNumber,occupation);
-
         try (FileWriter fileWriter = new FileWriter(filePath,true)) {
             fileWriter.write(System.lineSeparator() + newProfileEntry);
             System.out.println("New profile created and added to our system.");
@@ -199,9 +228,9 @@ public class Main {
 
         List<Profile> matchingProfiles = allProfiles.findMatches(searchFilter);
         if (matchingProfiles.isEmpty()) {
-            System.out.println("Sorry, but there are no tradies available with your search");
+            System.out.println("Sorry, no matches came up with your search");
         } else {
-            System.out.println("The following tradies are available: \n");
+            System.out.println("Your matches: \n");
             for (Profile p : matchingProfiles) {
                 System.out.println(p.getProfileDescription());
             }
@@ -209,4 +238,3 @@ public class Main {
     }
 
 }
-
