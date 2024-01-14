@@ -2,7 +2,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,6 +30,7 @@ public class Main {
                 System.out.println("Log in to existing user");
                 Profile myProfile = loginToProfile();
                 System.out.println("Hello " + myProfile.getName() + "! What would you like to do?");
+
                 processSearch(setSearchFilter(myProfile.getProfileType()));
 
             } else if (menuSelection == 2) {
@@ -84,7 +84,8 @@ public class Main {
     }
 
     /**
-     * Method allowing user to log into their profile
+     * method allowing user to log into their profile using username/password
+     * @return Profile object representing user's profile
      */
     private static Profile loginToProfile() {
         String username = "";
@@ -107,7 +108,7 @@ public class Main {
      * @param username String representing the entered username
      * @return true if username exists, false if not
      */
-    private static boolean checkProfileUsername(String username) {
+    private static boolean checkIfUsernameAvailable(String username) {
         return allProfiles.getProfileUsername(username) != null;
     }
 
@@ -129,7 +130,7 @@ public class Main {
         while (username.equals("")) {
             System.out.println("Enter your username:");
             username = input.next();
-            if (checkProfileUsername(username)) {
+            if (checkIfUsernameAvailable(username)) {
                 System.out.println("The entered username already exists, please try another one.");
                 username = "";
             }
@@ -174,7 +175,7 @@ public class Main {
         String newProfileEntry = String.format("%s,%s,%s,%s,%s,%s",username,password,profileType,name,phoneNumber,occupation);
         try (FileWriter fileWriter = new FileWriter(filePath,true)) {
             fileWriter.write(System.lineSeparator() + newProfileEntry);
-            System.out.println("New profile created and added to our system.");
+            System.out.println("New profile created and added to our system. Please log in.");
         } catch (IOException io) {
             System.out.println("Error, something happened when trying to write to the file.");
         }
@@ -186,7 +187,6 @@ public class Main {
      * @return a SearchFilter object with selected filters
      */
     private static SearchFilter setSearchFilter(String profileType) {
-        System.out.println("You are searching for a " + profileType + ".");
         String occupation = "";
         if (profileType.equals("customer")) {
             int occupationInt = -1;
