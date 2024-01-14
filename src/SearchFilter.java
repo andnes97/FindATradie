@@ -4,30 +4,30 @@
 public class SearchFilter {
 
     // fields
-    private final String profileType;
-    private final String occupation;
+    private final String profileTypeFilter;
+    private final String occupationFilter;
 
     /**
      * Constructor creating desired filters for searching
-     * @param profileType
-     * @param occupation
+     * @param profileTypeFilter
+     * @param occupationFilter
      */
-    public SearchFilter(String profileType, String occupation) {
-        this.profileType = profileType;
-        this.occupation = occupation;
+    public SearchFilter(String profileTypeFilter, String occupationFilter) {
+        this.profileTypeFilter = profileTypeFilter;
+        this.occupationFilter = occupationFilter;
     }
 
     /**
      * @return the type of the profile (customer/tradie)
      */
-    public String getProfileType() {
-        return profileType;
+    public String getProfileTypeFilter() {
+        return profileTypeFilter;
     }
 
     /**
      * @return the occupation of the profile
      */
-    public String getOccupation() {
-        return occupation;
+    public String getOccupationFilter() {
+        return occupationFilter;
     }
 }

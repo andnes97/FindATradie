@@ -7,8 +7,6 @@ public class AllProfiles {
 
     private final Set<Profile> profileSet = new HashSet<>();
 
-    // methods
-
     /**
      * method adding a profile to the profileSet database
      * @param profile a Profile object
@@ -48,12 +46,10 @@ public class AllProfiles {
      * @return matchingProfiles: A list of profiles that match the users filters
      */
     public List<Profile> findMatches(SearchFilter searchFilter) {
-
         List<Profile> matchingProfiles = new ArrayList<>();
         for (Profile p : profileSet) {
-            if (p.getOccupation().equals(searchFilter.getOccupation())) matchingProfiles.add(p);
+            if (p.getOccupation().equals(searchFilter.getOccupationFilter())) matchingProfiles.add(p);
         }
-
         return matchingProfiles;
     }
 

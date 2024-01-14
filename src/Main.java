@@ -20,9 +20,7 @@ public class Main {
      */
     public static void main(String[] args) {
         allProfiles = loadProfilesFromFile();
-
         System.out.println("Welcome to Find A Tradie!");
-
         int menuSelection = 0;
         while (menuSelection == 0 || menuSelection == 2) {
             System.out.println("\n1. Log in \n2. Register new profile" +
@@ -32,7 +30,6 @@ public class Main {
             if (menuSelection == 1) {
                 System.out.println("Log in to existing user");
                 loginToProfile();
-
                 System.out.println("Are you a customer looking for help, or a tradie looking for work? (customer/tradie)");
                 String profileType = input.next();
                 SearchFilter searchFilter = setSearchFilter(profileType);
@@ -47,7 +44,6 @@ public class Main {
                 System.exit(0);
             }
         }
-
     }
 
     /**
@@ -55,10 +51,8 @@ public class Main {
      * @return allProfilesDatabase: a AllProfiles object containing each individual profile
      */
     private static AllProfiles loadProfilesFromFile() {
-
         AllProfiles allProfilesDatabase = new AllProfiles();
         Path path = Path.of(filePath);
-
         List<String> fileContent = null;
         try {
             fileContent = Files.readAllLines(path);
@@ -87,12 +81,13 @@ public class Main {
             Profile profile = new Profile(username, password, profileType, name, phoneNumber, occupation);
             allProfilesDatabase.addProfile(profile);
         }
-
         return allProfilesDatabase;
     }
 
+    /**
+     * Method allowing user to log into their profile
+     */
     private static void loginToProfile() {
-
         String username = "";
         String password = "";
         while (username.equals("")) {
@@ -131,7 +126,6 @@ public class Main {
      * method to create a new profile and write it to profileData.txt
      */
     private static void createProfile() {
-
         String username = "";
         while (username.equals("")) {
             System.out.println("Enter your username:");
@@ -193,7 +187,6 @@ public class Main {
      * @return a SearchFilter object with selected filters
      */
     private static SearchFilter setSearchFilter(String profileType) {
-
         System.out.println("You are searching for a " + profileType + ".");
         String occupation = "";
         if (profileType.equals("customer")) {
@@ -208,7 +201,6 @@ public class Main {
                     System.out.println("Invalid input. Please only user valid integers (1, 2, 3)");
                 }
             }
-
             occupation = switch (occupationInt) {
                 case 1 -> "Carpenter";
                 case 2 -> "Plumber";
@@ -216,7 +208,6 @@ public class Main {
                 default -> occupation;
             };
         }
-
         return new SearchFilter(profileType, occupation);
     }
 
@@ -225,7 +216,6 @@ public class Main {
      * @param searchFilter entered filters by the user
      */
     private static void processSearch(SearchFilter searchFilter) {
-
         List<Profile> matchingProfiles = allProfiles.findMatches(searchFilter);
         if (matchingProfiles.isEmpty()) {
             System.out.println("Sorry, no matches came up with your search");

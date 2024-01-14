@@ -1,4 +1,3 @@
-import java.util.List;
 
 public class Profile {
 
@@ -11,7 +10,6 @@ public class Profile {
     private final String occupation;
 
     // methods
-
     /**
      * constructor to create a Profile object
      * @param username the profile username
@@ -74,7 +72,6 @@ public class Profile {
 
     /*
     // eventually used to display relevant tradies to customers
-
     public void printProfileInfo() {
         List<Profile> availableProfiles = allProfiles.getProfileDatabase();
         for (Profile profile : availableProfiles) {
@@ -84,6 +81,10 @@ public class Profile {
     }
      */
 
+    /**
+     * method to get a description of the profile
+     * @return String object containing a profile description
+     */
     public String getProfileDescription() {
         return "Name: " + this.getName() + "\nPhone number: " + this.getPhoneNumber()
                 + "\nOccupation: " + this.getOccupation() + "\n";
