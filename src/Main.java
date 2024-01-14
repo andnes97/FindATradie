@@ -22,18 +22,16 @@ public class Main {
         allProfiles = loadProfilesFromFile();
         System.out.println("Welcome to Find A Tradie!");
         int menuSelection = 0;
-        while (menuSelection == 0 || menuSelection == 2) {
+        while (menuSelection != 1) {
             System.out.println("\n1. Log in \n2. Register new profile" +
             "\n3. Exit program");
             menuSelection = input.nextInt();
 
             if (menuSelection == 1) {
                 System.out.println("Log in to existing user");
-                loginToProfile();
-                System.out.println("Are you a customer looking for help, or a tradie looking for work? (customer/tradie)");
-                String profileType = input.next();
-                SearchFilter searchFilter = setSearchFilter(profileType);
-                processSearch(searchFilter);
+                Profile myProfile = loginToProfile();
+                System.out.println("Hello " + myProfile.getName() + "! What would you like to do?");
+                processSearch(setSearchFilter(myProfile.getProfileType()));
 
             } else if (menuSelection == 2) {
                 System.out.println("Register a new profile");
@@ -42,7 +40,8 @@ public class Main {
             } else if (menuSelection == 3) {
                 System.out.println("Exiting the program");
                 System.exit(0);
-            }
+
+            } else System.out.println("Please only select one of the given options (1-3)");
         }
     }
 
@@ -61,7 +60,7 @@ public class Main {
             System.exit(0);
         }
 
-        // split every line in data file into independent bits of information
+        // split every line from the second one in data file into independent bits of information
         for (int i = 1; i < fileContent.size(); i++) {
             String[] fileContentFeature = fileContent.get(i).split(",");
 
@@ -87,7 +86,7 @@ public class Main {
     /**
      * Method allowing user to log into their profile
      */
-    private static void loginToProfile() {
+    private static Profile loginToProfile() {
         String username = "";
         String password = "";
         while (username.equals("")) {
@@ -100,7 +99,7 @@ public class Main {
                 username = "";
             }
         }
-        System.out.println("Hello " + username + "! What would you like to do?");
+        return allProfiles.getProfile(username, password);
     }
 
     /**
