@@ -15,7 +15,7 @@ public class Main {
     // methods
     /**
      * main method
-     * @param args
+     * @param args n/a
      */
     public static void main(String[] args) {
         allProfiles = loadProfilesFromFile();
@@ -23,20 +23,23 @@ public class Main {
         while (true) {
             System.out.println("1. Log in \n2. Register new profile" +
             "\n3. Exit program");
-            int menuSelection = input.nextInt();
-
-            if (menuSelection == 1) {
-                System.out.println("Log in to existing user");
-                Profile myProfile = loginToProfile();
-                System.out.println("Hello " + myProfile.getName() + "! What would you like to do?");
-                selectActivity(myProfile.getProfileType());
-            } else if (menuSelection == 2) {
-                System.out.println("Register a new profile");
-                createProfile();
-            } else if (menuSelection == 3) {
-                System.out.println("Exiting the program");
-                System.exit(0);
-            } else System.out.println("Please only select one of the given options (1-3)");
+            try {
+                int menuSelection = input.nextInt();
+                if (menuSelection == 1) {
+                    System.out.println("Log in to existing user");
+                    Profile myProfile = loginToProfile();
+                    System.out.println("Hello " + myProfile.getName() + "! What would you like to do?");
+                    selectActivity(myProfile.getProfileType());
+                } else if (menuSelection == 2) {
+                    System.out.println("Register a new profile");
+                    createProfile();
+                } else if (menuSelection == 3) {
+                    System.out.println("Exiting the program");
+                    System.exit(0);
+                } else System.out.println("Please only select one of the given options (1-3)");
+            } catch (NumberFormatException nfe) {
+                System.out.println("Please use numbers to select the menu options.");
+            }
         }
     }
 
@@ -84,7 +87,7 @@ public class Main {
     private static Profile loginToProfile() {
         String username = "";
         String password = "";
-        while (username.equals("")) {
+        while (username.isEmpty()) {
             System.out.println("Username:");
             username = input.next();
             System.out.println("Password:");
@@ -121,7 +124,7 @@ public class Main {
      */
     private static void createProfile() {
         String username = "";
-        while (username.equals("")) {
+        while (username.isEmpty()) {
             System.out.println("Enter your username:");
             username = input.next();
             if (checkIfUsernameAvailable(username)) {
@@ -134,7 +137,7 @@ public class Main {
         String password = input.next();
 
         String profileType = "";
-        while (profileType.equals("")) {
+        while (profileType.isEmpty()) {
             System.out.println("Are you a customer or a tradie? (customer/tradie):");
             profileType = input.next().toLowerCase();
             if (!profileType.equals("customer") && !profileType.equals("tradie")) {
@@ -148,11 +151,12 @@ public class Main {
         String name = input.nextLine();
 
         String phoneNumber = "";
-        while (phoneNumber.equals("")) {
+        long phoneNumberLong = 0;
+        while (phoneNumber.isEmpty()) {
             System.out.println("Enter your phone number");
             phoneNumber = input.next();
             try {
-                long phoneNumberLong = Long.parseLong(phoneNumber);
+                phoneNumberLong = Long.parseLong(phoneNumber);
             } catch (NumberFormatException nfe) {
                 System.out.println("Please enter a valid phone number (only use numbers)");
                 phoneNumber = "";
@@ -187,15 +191,19 @@ public class Main {
                 System.out.println("1. Look at received requests from customers");
             }
             System.out.println("2. Edit profile information \n3. Log out");
-            activitySelection = input.nextInt();
 
-            if (activitySelection == 1) {
-                processSearch(setSearchFilter(profileType));
-            } else if (activitySelection == 2) {
-                // method to edit profile information and save in data file
-            } else if (activitySelection == 3) {
-                System.out.println("Logging out and going back to main screen");
-            } else System.out.println("Please only select one of the given options (1 - 3");
+            try {
+                activitySelection = input.nextInt();
+                if (activitySelection == 1) {
+                    processSearch(setSearchFilter(profileType));
+                } else if (activitySelection == 2) {
+                    // method to edit profile information and save in data file
+                } else if (activitySelection == 3) {
+                    System.out.println("Logging out and going back to main screen");
+                } else System.out.println("Please only select one of the given options (1 - 3");
+            } catch (NumberFormatException nfa) {
+                System.out.println("Please use numbers to select the menu options.");
+            }
         }
     }
 

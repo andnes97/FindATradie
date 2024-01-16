@@ -70,17 +70,6 @@ public class Profile {
         return occupation;
     }
 
-    /*
-    // eventually used to display relevant tradies to customers
-    public void printProfileInfo() {
-        List<Profile> availableProfiles = allProfiles.getProfileDatabase();
-        for (Profile profile : availableProfiles) {
-            System.out.println(profile.getName() + "\nOccupation: " + profile.getOccupation()
-                    + "\nPhone number: " + profile.getPhoneNumber() + "\n");
-        }
-    }
-     */
-
     /**
      * method to get a description of the profile
      * @return String object containing a profile description
