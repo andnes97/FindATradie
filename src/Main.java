@@ -20,27 +20,22 @@ public class Main {
     public static void main(String[] args) {
         allProfiles = loadProfilesFromFile();
         System.out.println("Welcome to Find A Tradie!");
-        int menuSelection = 0;
-        while (menuSelection != 1) {
-            System.out.println("\n1. Log in \n2. Register new profile" +
+        while (true) {
+            System.out.println("1. Log in \n2. Register new profile" +
             "\n3. Exit program");
-            menuSelection = input.nextInt();
+            int menuSelection = input.nextInt();
 
             if (menuSelection == 1) {
                 System.out.println("Log in to existing user");
                 Profile myProfile = loginToProfile();
                 System.out.println("Hello " + myProfile.getName() + "! What would you like to do?");
-
-                processSearch(setSearchFilter(myProfile.getProfileType()));
-
+                selectActivity(myProfile.getProfileType());
             } else if (menuSelection == 2) {
                 System.out.println("Register a new profile");
                 createProfile();
-
             } else if (menuSelection == 3) {
                 System.out.println("Exiting the program");
                 System.exit(0);
-
             } else System.out.println("Please only select one of the given options (1-3)");
         }
     }
@@ -60,7 +55,6 @@ public class Main {
             System.exit(0);
         }
 
-        // split every line from the second one in data file into independent bits of information
         for (int i = 1; i < fileContent.size(); i++) {
             String[] fileContentFeature = fileContent.get(i).split(",");
 
@@ -142,7 +136,7 @@ public class Main {
         String profileType = "";
         while (profileType.equals("")) {
             System.out.println("Are you a customer or a tradie? (customer/tradie):");
-            profileType = input.next();
+            profileType = input.next().toLowerCase();
             if (!profileType.equals("customer") && !profileType.equals("tradie")) {
                 System.out.println("The entered profile type is not valid, please enter 'customer' or 'tradie'.");
                 profileType = "";
@@ -169,8 +163,7 @@ public class Main {
         if (profileType.equals("tradie")) {
             System.out.println("Enter your registered occupation");
             occupation = input.next();
-        }
-        else occupation = "NA";
+        } else occupation = "NA";
 
         String newProfileEntry = String.format("%s,%s,%s,%s,%s,%s",username,password,profileType,name,phoneNumber,occupation);
         try (FileWriter fileWriter = new FileWriter(filePath,true)) {
@@ -178,6 +171,31 @@ public class Main {
             System.out.println("New profile created and added to our system. Please log in.");
         } catch (IOException io) {
             System.out.println("Error, something happened when trying to write to the file.");
+        }
+    }
+
+    /**
+     * method to select what to do once logged in
+     * @param profileType the type of the current profile (customer/tradie)
+     */
+    private static void selectActivity(String profileType) {
+        int activitySelection = 0;
+        while (activitySelection != 3) {
+            if (profileType.equals("customer")) {
+                System.out.println("1. Search for tradies");
+            } else if (profileType.equals("tradie")) {
+                System.out.println("1. Look at received requests from customers");
+            }
+            System.out.println("2. Edit profile information \n3. Log out");
+            activitySelection = input.nextInt();
+
+            if (activitySelection == 1) {
+                processSearch(setSearchFilter(profileType));
+            } else if (activitySelection == 2) {
+                // method to edit profile information and save in data file
+            } else if (activitySelection == 3) {
+                System.out.println("Logging out and going back to main screen");
+            } else System.out.println("Please only select one of the given options (1 - 3");
         }
     }
 
