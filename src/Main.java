@@ -184,7 +184,8 @@ public class Main {
      */
     private static void selectActivity(String profileType) {
         int activitySelection = 0;
-        while (activitySelection != 3) {
+        boolean repeatActivitySelection = true;
+        while (repeatActivitySelection) {
             if (profileType.equals("customer")) {
                 System.out.println("1. Search for tradies");
             } else if (profileType.equals("tradie")) {
@@ -200,6 +201,8 @@ public class Main {
                     // method to edit profile information and save in data file
                 } else if (activitySelection == 3) {
                     System.out.println("Logging out and going back to main screen");
+                    
+                    repeatActivitySelection = false;
                 } else System.out.println("Please only select one of the given options (1 - 3");
             } catch (NumberFormatException nfa) {
                 System.out.println("Please use numbers to select the menu options.");
